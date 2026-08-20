@@ -20,8 +20,10 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Instala as dependências listadas no requirements.txt
-# --no-cache-dir instrui o pip a não salvar o cache dos pacotes baixados, mantendo a imagem menor
-RUN pip install --no-cache-dir -r requirements.txt
+# --no-cache-dir instrui o pip a não salvar o cache.
+# --extra-index-url é CRUCIAL aqui: ele diz ao pip para priorizar as versões exclusivas de CPU 
+# de pacotes pesados como PyTorch, que chegam a ser gigabytes menores que as versões com suporte a placa de vídeo.
+RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
 
 # Caso o gunicorn não esteja no seu requirements.txt, descomente a linha abaixo para instalá-lo
 # RUN pip install --no-cache-dir gunicorn
