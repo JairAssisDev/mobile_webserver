@@ -1,0 +1,14 @@
+.venv
+venv
+env
+__pycache__
+*.pyc
+.git
+.gitignore
+*.sqlite3
+*.db
+# Adicione outras pastas de modelos pesados locais se não forem estritamente necessários no container, ex:
+# treinamentomodelo/runs/
+# *.pt
+# *.onnx
+# *.tflite
