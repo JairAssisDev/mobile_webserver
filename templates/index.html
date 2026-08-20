@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Skin Lesion AI</title>
+    <meta name="description" content="Análise avançada de lesões de pele com Inteligência Artificial">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+                    <path d="M12 12 2.1 7.1"></path>
+                    <path d="m12 12 7.1-9.9"></path>
+                </svg>
+            </div>
+            <h1>Skin Lesion AI</h1>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="app-main">
+            <!-- HERO / INSTRUCTIONS -->
+            <section class="hero-section" id="hero-section">
+                <h2>Analise sua pele em segundos</h2>
+                <p>Tire uma foto ou envie uma imagem da sua galeria para receber uma análise instantânea baseada em IA.</p>
+                
+                <div class="action-buttons">
+                    <!-- Native camera input -->
+                    <label class="btn btn-primary" for="camera-input">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                        Abrir Câmera
+                    </label>
+                    <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
+                    
+                    <!-- Native gallery input -->
+                    <label class="btn btn-secondary" for="gallery-input">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        Escolher Arquivo
+                    </label>
+                    <input type="file" id="gallery-input" accept="image/*" hidden>
+                </div>
+            </section>
+
+            <!-- IMAGE PREVIEW & LOADING -->
+            <section class="preview-section hidden" id="preview-section">
+                <div class="image-wrapper">
+                    <img id="image-preview" src="" alt="Sua imagem">
+                    <div class="loading-overlay hidden" id="loading-overlay">
+                        <div class="spinner"></div>
+                        <span>Analisando...</span>
+                    </div>
+                </div>
+                <div class="preview-actions">
+                    <button class="btn btn-outline" id="btn-cancel">Cancelar</button>
+                    <button class="btn btn-primary" id="btn-analyze">Analisar Imagem</button>
+                </div>
+            </section>
+
+            <!-- RESULT CARD -->
+            <section class="result-section hidden" id="result-section">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Resultado da Análise</h3>
+                        <button class="btn-icon" id="btn-close-result" aria-label="Fechar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="result-body">
+                        <div class="result-item main-result">
+                            <span class="label">Classificação</span>
+                            <span class="value" id="res-class">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Confiança</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="res-class-conf-bar"></div>
+                            </div>
+                            <span class="conf-value" id="res-class-conf">--%</span>
+                        </div>
+                        
+                        <hr class="divider">
+                        
+                        <div class="result-item sub-result">
+                            <span class="label">Subtipo Identificado</span>
+                            <span class="value" id="res-sub-class">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Confiança do Subtipo</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="res-sub-conf-bar"></div>
+                            </div>
+                            <span class="conf-value" id="res-sub-conf">--%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
